@@ -4,38 +4,40 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-class Location(models.Model):
-        address = models.CharField(max_length=100)
-        city = models.CharField(max_length=100)
+class Washer(models.Model):
+    name = models.CharField(max_length=30)
+    surname = models.CharField(max_length=40)
+    percentage = models.IntegerField()
 
-        def __str__(self):
-            return self.address
-
-class WasherCompany(models.Model):
-    name=models.CharField(max_length=100)
-    number_of_cabins=models.PositiveSmallIntegerField()
-    locations=models.ManyToManyField(Location,  related_name="location")
 
     def __str__(self):
         return self.name
 
-class HireCompany(models.Model):
+class Car(models.Model):
     class CarType(models.TextChoices):
         Sedan="SD",  _("Sedan")
         Hatchback="HT", _("Hatchback")
         Sport="SP", _("Sport")
         Couple="CP", _("Couple")
-    
-    
-    company=models.ForeignKey(WasherCompany, on_delete=models.CASCADE, related_name="company")
-    cartype=models.CharField(
+    number=models.CharField(max_length=7)
+    type=models.CharField(
         max_length=2,
         choices=CarType.choices,
-        default=CarType.Sedan,
-    )
-    date=models.DateTimeField(auto_now_add=True,)
-    date.editable=True
-   
+        default=CarType.Sedan)
+    price=models.IntegerField()
+
 
     def __str__(self):
-        return 'company -> {}, type -> {}'.format(self.company,self.get_cartype_display())
+        return self.number
+
+class Order(models.Model):
+    order_date=models.DateTimeField()
+    finish_date=models.DateTimeField()
+    price=models.IntegerField()
+    washer=models.ForeignKey(Washer, on_delete=models.CASCADE, related_name="washer")
+    car=models.ForeignKey(Car,on_delete=models.CASCADE, related_name="car")
+
+    def __str__(self):
+        return '{}, {}'.format(self.washer,self.car)
+    
+    

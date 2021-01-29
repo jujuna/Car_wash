@@ -7,17 +7,10 @@
     </head>
     <body>
 
-        {% for i in company %}
-        <p>Washer company  -> <a href="{% url 'order' i.id %}">{{i}}</a> Number of cabins -> {{i.number_of_cabins}} </p>
-        {% endfor %}
-
-    </br>
-    </br>
-        {% for i in location %}
-        <p>City: {{i.city}}, Address: {{i}}</p>
-        {% endfor %}
-
-        <h1>Most Washers company are in {{common}} </h1>
+    {% for i in washer %}
+    <p style="color:red; font-size:20px;">მრეცხავი: <a href="{% url 'detail' i.id %}">{{i}}</a></p>
+    {% endfor %}
+    
 
     </body>
 </html>
