@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            home
-        </title>
-    </head>
-    <body>
-
+{% extends "washapp/base.html" %}
+{% block content %}
     {% for i in washer %}
-    <p style="color:red; font-size:20px;">მრეცხავი: <a href="{% url 'detail' i.id %}">{{i}}</a></p>
+    <p style="color:red; font-size:20px;">მრეცხავი: <a href="{% url 'detail' i.id %}">{{i.name}} {{i.surname}}</a></p>
     {% endfor %}
-    
-
-    </body>
-</html>
+{% endblock %}

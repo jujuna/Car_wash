@@ -6,11 +6,18 @@ from dateutil.relativedelta import relativedelta
 
 def home(request):
     man=Washer.objects.all()
-    # a=man.washer.all()
-    # b=a.filter(order_date__year="2021")
-    # print(len(b))
-    return render(request, "washapp/home.html", {"washer":man})
     
+    return render(request, "washapp/home.html", {"washer":man})
+
+
+def calculate(salary,percentage):
+    pr=[]
+    for n in salary:
+        pr.append(list(n))
+    full_salary=[sum(i) for i in zip(*pr)]
+    int_salary=full_salary[0]
+    washer_salary=(int_salary*percentage)/100
+    return washer_salary
 
 def detail(request, pk):
     today = datetime.datetime.today()
@@ -18,17 +25,34 @@ def detail(request, pk):
     lastYear=today- relativedelta(years=1)
     lastWeek=today-relativedelta(weeks=1)
     person=Washer.objects.get(pk=pk)
-    a=person.washer.all()
-    by_month=len(a.filter(order_date__range=[lastMonth, today]))
-    by_year=len(a.filter(order_date__range=[lastYear, today]))
-    by_week=len(a.filter(order_date__range=[lastWeek, today]))
+    per=person.washer.all()
+    
+    by_month=len(per.filter(order_date__range=[lastMonth, today]))
+    by_year=len(per.filter(order_date__range=[lastYear, today]))
+    by_week=len(per.filter(order_date__range=[lastWeek, today]))
 
     washer_percentage=person.percentage
-    mon=[]
-    for i in a:
-        mon.append(i.price)
-        
-    sum_money=sum(mon)
-    money=(washer_percentage*sum_money)/100
     
-    return render(request, "washapp/detail.html", {"person":person, "month":by_month, "year":by_year, "week":by_week,"money":money})
+
+    week_salary=per.values_list("price").filter(order_date__range=[lastWeek, today])
+    week_salary=calculate(week_salary,washer_percentage)
+    month_salary=per.values_list("price").filter(order_date__range=[lastMonth, today])
+    month_salary=calculate(month_salary,washer_percentage)
+    year_salary=per.values_list("price").filter(order_date__range=[lastYear, today])
+    year_salary=calculate(year_salary,washer_percentage)
+    
+    
+    
+
+    context={
+        "month":by_month,
+        "year":by_year,
+        "week":by_week,
+        "week_salary":week_salary,
+        "month_salary":month_salary,
+        "year_salary":year_salary,
+        "title":"Washer detail"
+    }
+    
+    
+    return render(request, "washapp/detail.html", context)
