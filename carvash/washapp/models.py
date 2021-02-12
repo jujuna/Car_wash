@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 
+
 class Washer(models.Model):
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=40)
@@ -24,7 +25,7 @@ class Car(models.Model):
         max_length=2,
         choices=CarType.choices,
         default=CarType.Sedan)
-    price=models.IntegerField()
+    
 
 
     def __str__(self):

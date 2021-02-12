@@ -1,7 +1,24 @@
 {% extends "washapp/base.html" %}
 {% block content %}
-    <h1>ბოლო კვირაში გარეცხა {{week}} მანქანა და იშოვა {{week_salary}} ლარი</h1>
-    <h1>ბოლო თვეში გარეცხა {{month}} მანქანა და იშოვა {{month_salary}} ლარი</h1>
-    <h1>ბოლო წლის განმავლობაში გარეცხა {{year}} მანქანა და იშოვა {{year_salary}} ლარი</h1>
+    
+    
+    <div class="col s12 m3 l3">
+    <div class="row">
+        <div class="col s12 m8">
+          <div class="card">
+            <div class="card-content">
+                <h3>ბოლო კვირაში გარეცხა {{week}} მანქანა და იშოვა {{week_salary}} ლარი</h3>
+            </div>
+            <div class="card-content">
+                <h3>ბოლო თვეში გარეცხა {{month}} მანქანა და იშოვა {{month_salary}} ლარი</h3>
+            </div>
+            <div class="card-content">
+                <h3>ბოლო წლის განმავლობაში გარეცხა {{year}} მანქანა და იშოვა {{year_salary}} ლარი</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 
 {% endblock %}

@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
-
+from django.core.paginator import Paginator
 from .models import Washer,Car,Order
 import datetime
+from .forms import CarForm
 from dateutil.relativedelta import relativedelta
 
 def home(request):
@@ -11,6 +12,8 @@ def home(request):
 
 
 def calculate(salary,percentage):
+    if len(salary) == int(0):
+        return 0
     pr=[]
     for n in salary:
         pr.append(list(n))
@@ -56,3 +59,24 @@ def detail(request, pk):
     
     
     return render(request, "washapp/detail.html", context)
+
+
+def car(request):
+    car=Car.objects.all()
+    page = request.GET.get('page', 1)
+    paginator=Paginator(car,2)
+    
+    try:
+        users=paginator.page(page)
+    except PageNotAnInteger:
+        users=paginator.page(1)
+    except EmptyPage:
+        users=paginator.page(paginator.num_pages)
+
+    form=CarForm()
+    if request.method=="POST":
+        form=CarForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    return render(request,"washapp/cars.html", {"users":users, "form":form})

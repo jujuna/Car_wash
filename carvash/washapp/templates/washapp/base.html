@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,8 +11,27 @@
             Home
         </title>
         {% endif %}
+          <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
     </head>
     <body>
+        <nav>
+            <div class="nav-wrapper">
+                {% if user.is_authenticated %}
+                <a class="right">hello {{ request.user.username }}</a>
+                {% endif %}
+              
+              <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'car' %}">Cars</a></li>
+                
+              </ul>
+            </div>
+          </nav>
 
     {% block content %}
 
