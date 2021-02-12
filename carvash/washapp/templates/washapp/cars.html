@@ -10,11 +10,7 @@
     {% endfor %}
 </div>
 <div class="input-field col s6">
-  <select name="type">
-    {% for x,y in form.fields.type.choices %}
-       <option value="{{ x }}"{% if form.fields.type.value == x %} selected{% endif %}>{{ y }}</option>
-    {% endfor %}
-    </select>
+  
   <label for="id_wash_type">Choose a wash type:</label>
   {% for error in form.errors.type %}
       <p class="error">{{ error }}</p>
