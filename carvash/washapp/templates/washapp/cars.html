@@ -1,5 +1,6 @@
 {% extends "washapp/base.html" %}
 {% block content %}
+
 <form method="POST" class="right" novalidate>
   {% csrf_token %}
   <div class="input-field col s6">
@@ -8,19 +9,26 @@
     {% for error in form.errors.car %}
         <p class="error">{{ error }}</p>
     {% endfor %}
-</div>
+    
+  </div>
+
 <div class="input-field col s6">
-  
-  <label for="id_wash_type">Choose a wash type:</label>
-  {% for error in form.errors.type %}
+  <select name="type">
+    {% for x,y in form.fields.type.choices %}
+      <option value="{{ x }}"{% if form.fields.type.value == x %} selected{% endif %}>{{ y }}</option>
+    {% endfor %}
+    </select>
+  <label for="id_wash_type">Choose a Car type:</label>
+    {% for error in form.errors.type %}
       <p class="error">{{ error }}</p>
-  {% endfor %}
+    {% endfor %}
 </div>
 
   <button class="btn waves-effect waves-light" type="submit" name="action">Submit
     <i class="material-icons right"></i>
-</button>
+  </button>
 </form>
+
 {% for car in users %}
     <div class="col s12 m3 l3">
         <div class="row">

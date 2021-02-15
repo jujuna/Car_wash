@@ -15,19 +15,24 @@ class Washer(models.Model):
         return self.name
 
 class Car(models.Model):
-    class CarType(models.TextChoices):
-        Sedan="SD",  _("Sedan")
-        Hatchback="HT", _("Hatchback")
-        Sport="SP", _("Sport")
-        Couple="CP", _("Couple")
+    # class CarType(models.TextChoices):
+    #     Sedan="SD",  _("Sedan")
+    #     Hatchback="HT", _("Hatchback")
+    #     Sport="SP", _("Sport")
+    #     Couple="CP", _("Couple")
+    CarType=(
+        ("SD", "Sedan"),
+        ("HT", "Hatchback"),
+        ("SP", "Sport"),
+        ("CP", "Couple")
+
+    )
     number=models.CharField(max_length=7)
     type=models.CharField(
         max_length=2,
-        choices=CarType.choices,
-        default=CarType.Sedan)
+        choices=CarType,
+        default="")
     
-
-
     def __str__(self):
         return self.number
 
